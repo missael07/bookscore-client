@@ -13,6 +13,14 @@ export default {
             props: {
                 title: 'Listado de Juegos'
             }
+        },
+        {
+            path: `/${ROUTE_NAME}/start`,
+            name: 'games-start',
+            component: () => import('@/modules/games/views/StartGameView.vue'),
+            props: {
+                title: 'Listado de Juegos'
+            }
         }
     ]
 }

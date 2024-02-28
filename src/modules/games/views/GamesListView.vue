@@ -1,68 +1,24 @@
 
 <script setup lang="ts">
-import { useGames } from '../composable/useGames';
 import Loading from '@/components/LoadingComponent.vue'
+import Header from '@/modules/games/components/HeaderComponent.vue';
+import Table from '@/modules/games/components/TableComponent.vue';
+import { useRouter } from 'vue-router';
+import { useGames } from '../composable/useGames';
 
-const { games, isLoading, count, wons, loss } = useGames();
+const { games, isLoading, count, wons, loss, isError, error } = useGames();
 
+const router = useRouter()
+const addGame = () => {
+  router.push({name: 'games-start'})
+}
 </script>
-
-
 
 <template>
   <Loading  v-if="isLoading" />
+  <div v-else-if="isError"> {{ error }}</div>
   <div class="lg:flex lg:flex-col items-center justify-between p-3"  v-else>
-    <div class="min-w-0 flex-1">
-      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Juegos Jugados <template v-if="count > 0">- {{ count }}</template></h2>
-      <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-        <template v-if="count > 0">
-            <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
-              <i class="fas fa-check mr-1"></i>
-              {{ wons }}
-            </div>
-            <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
-              <i class="fas fa-times mr-1"></i>
-              {{ loss }}
-            </div>
-        </template>
-        <div class="mt-2 flex items-center text-sm text-gray-500 justify-end">
-            <a class="btn-primary mt-2">
-                <span class="mr-2">Agregar Juego</span>
-                <i class="fa-regular fa-add"></i>
-              </a>
-        </div>
-      </div>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="table-auto min-w-full divide-y divide-gray-200">
-        <thead>
-          <tr>
-            <th class="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">VS</th>
-            <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Carreras Favor</th>
-            <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Carreras Contra</th>
-            <th class="md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resultado</th>
-          </tr>
-        </thead>
-        <tbody v-if="games.length > 0">
-          <tr v-for="game in games" :key="game._id" >
-            <td class="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.vsTeam }}</td>
-            <td class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.runsOut }}</td>
-            <td class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.runsIn }}</td>
-            <td class="md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> {{ game.isWon ? 'Ganado' : 'Perdido' }}</td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <trs>
-            <td class="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="4" >No hay juegos registrados.</td>
-          </trs>
-        </tbody>
-      </table>
-    </div>
-</div>
-
+    <Header :wons="wons" :loss="loss" :count="count" @create="addGame" />
+    <Table :games="games"/>
+  </div>
 </template>
-
-
-<style scoped>
-
-</style>

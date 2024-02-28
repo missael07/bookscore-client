@@ -1,7 +1,7 @@
 <template>
   <nav>
-    <router-link :to="{name: 'dashboard'}"> <i class="fa-solid fa-gauge"></i>Dashboard</router-link> |
-    <router-link :to="{name: 'games'}"><i class="fa-solid fa-baseball"></i>Juegos</router-link>
+    <!-- <router-link :to="{name: 'dashboard'}"> <i class="fa-solid fa-gauge"></i>Dashboard</router-link> | -->
+    <router-link :to="{name: 'games'}"><i class="fa-solid fa-baseball"></i>Resultados</router-link>
   </nav>
   <hr>
   <router-view/>
@@ -26,6 +26,6 @@ nav a {
 }
 
 nav a.router-link-active {
-  color: #42b983;
+  color: #14b8a6;
 }
 </style>

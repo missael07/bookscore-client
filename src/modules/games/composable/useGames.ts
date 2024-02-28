@@ -1,28 +1,28 @@
-import { computed, ref } from 'vue';
-import { getGames } from '../helpers/getGames';
+import { computed, onMounted, ref } from 'vue';
+import { getGames,  } from '../helpers/getGames';
 import { Games } from '../interfaces/games-list.response';
+import { StartGame } from '../interfaces/start-game';
+import { useQuery } from '@tanstack/vue-query';
+
 
 
 export const useGames = () => {
 
-    const games = ref<Games[]>([])
-    const isLoading = ref(true);
-
-
-    getGames().then( data => {
-        games.value = data 
-        setTimeout(() => {
-            isLoading.value = false;
-        }, 3000);
-    });
+    const { isLoading, data: games, isError, error} = useQuery({
+    queryKey: ['games'],
+    queryFn: getGames,
+    retry: false
+    } )
 
     return {
-        games,
+        games, 
         isLoading,
+        isError,
+        error,
 
-        count: computed(() => games.value.length),
-        wons: computed( () => games.value.filter(f => f.isWon).length),
-        loss: computed( () => games.value.filter(f => !f.isWon).length),
+        count: computed(() => games?.value?.length ?? 0),
+        wons: computed( () => games?.value?.filter(f => f.isWon).length ?? 0),
+        loss: computed( () => games?.value?.filter(f => !f.isWon).length ?? 0),
     }
 
 };
