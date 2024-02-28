@@ -1,8 +1,9 @@
 <template>
   <nav>
-    <router-link :to="{name: 'dashboard'}">Dashboard</router-link> |
-    <router-link :to="{name: 'games'}">Juegos</router-link>
+    <router-link :to="{name: 'dashboard'}"> <i class="fa-solid fa-gauge"></i>Dashboard</router-link> |
+    <router-link :to="{name: 'games'}"><i class="fa-solid fa-baseball"></i>Juegos</router-link>
   </nav>
+  <hr>
   <router-view/>
 </template>
 
@@ -16,7 +17,7 @@
 }
 
 nav {
-  padding: 30px;
+  padding: 10px;
 }
 
 nav a {
