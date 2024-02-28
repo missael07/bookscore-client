@@ -13,16 +13,18 @@ const { games, isLoading, count, wons, loss } = useGames();
   <Loading  v-if="isLoading" />
   <div class="lg:flex lg:flex-col items-center justify-between p-3"  v-else>
     <div class="min-w-0 flex-1">
-      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Juegos Jugados - {{ count }}</h2>
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Juegos Jugados <template v-if="count > 0">- {{ count }}</template></h2>
       <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-        <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
-          <i class="fas fa-check mr-1"></i>
-          {{ wons }}
-        </div>
-        <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
-          <i class="fas fa-times mr-1"></i>
-          {{ loss }}
-        </div>
+        <template v-if="count > 0">
+            <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
+              <i class="fas fa-check mr-1"></i>
+              {{ wons }}
+            </div>
+            <div class="mt-2 flex items-center text-sm text-gray-500 font-bold text-2xl">
+              <i class="fas fa-times mr-1"></i>
+              {{ loss }}
+            </div>
+        </template>
         <div class="mt-2 flex items-center text-sm text-gray-500 justify-end">
             <a class="btn-primary mt-2">
                 <span class="mr-2">Agregar Juego</span>
@@ -41,13 +43,18 @@ const { games, isLoading, count, wons, loss } = useGames();
             <th class="md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resultado</th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="game in games" :key="game._id">
+        <tbody v-if="games.length > 0">
+          <tr v-for="game in games" :key="game._id" >
             <td class="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.vsTeam }}</td>
             <td class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.runsOut }}</td>
             <td class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >{{ game.runsIn }}</td>
             <td class="md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> {{ game.isWon ? 'Ganado' : 'Perdido' }}</td>
           </tr>
+        </tbody>
+        <tbody v-else>
+          <trs>
+            <td class="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="4" >No hay juegos registrados.</td>
+          </trs>
         </tbody>
       </table>
     </div>

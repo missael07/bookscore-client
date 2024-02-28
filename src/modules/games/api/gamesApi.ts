@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const gamesApi = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://bookscore-server-production.up.railway.app'
 });
 
 
