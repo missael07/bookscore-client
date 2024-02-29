@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: () =>  {return {name: 'dashboard'}}
+    redirect: () =>  {return {name: 'games-list'}}
   }
 ]
 

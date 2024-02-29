@@ -1,30 +1,24 @@
 <template>
-  <div class="modal-background fade-in" @click.self="$emit('on:close')">
+  <div class="modal-background fade-in" @click.self="$emit('close')">
     <div class="modal-container">
         <slot name="header"/>
         <slot name="body"/>
         <slot name="footer"/>
 
-        <slot name="exposed" :newTitle="newTitle"/>
+        <slot name="exposed" :title="title"/>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  emits: ['on:close'],
-  props: {
-    title: {
-      type: String
-    }
-  },
-  setup(props, context) {
-
-    return {
-      newTitle: props.title?.toUpperCase()
-    }
-  }
+<script setup lang="ts">
+interface Props {
+  title: string;
 }
+
+defineProps<Props>();
+
+defineEmits(['close'])
+
 </script>
 
 <style scoped>

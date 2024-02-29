@@ -1,7 +1,5 @@
 import { computed, onMounted, ref } from 'vue';
 import { getGames,  } from '../helpers/getGames';
-import { Games } from '../interfaces/games-list.response';
-import { StartGame } from '../interfaces/start-game';
 import { useQuery } from '@tanstack/vue-query';
 
 
