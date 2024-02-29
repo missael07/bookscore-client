@@ -1,22 +1,14 @@
 <template>
   <div class="modal-background fade-in" @click.self="$emit('close')">
-    <div class="modal-container">
+    <div class=" w-11/12 h-1/2 sm:w-2/5 sm:h-2/5 modal-container font-serif">
         <slot name="header"/>
         <slot name="body"/>
         <slot name="footer"/>
-
-        <slot name="exposed" :title="title"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-interface Props {
-  title: string;
-}
-
-defineProps<Props>();
-
 defineEmits(['close'])
 
 </script>
@@ -36,8 +28,7 @@ defineEmits(['close'])
 }
 
 .modal-container {
-    width: 250px;
-    height: 250px;
+
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
