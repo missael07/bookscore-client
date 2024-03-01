@@ -42,7 +42,6 @@ export const startGameHelper = async ( dataToSave: StartGame): Promise<Games> =>
 
 export const finishGameHelper = async (id: string, dataToSave: any ): Promise<Games> => {
 
-  console.log(dataToSave)
   const { data } = await gamesApi.patch<Games>(`/game/${id}`, dataToSave);
 
   const game: Games = {

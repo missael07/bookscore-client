@@ -1,9 +1,10 @@
 <template>
-  <div v-if="!isStartedGame">
+  <div v-if="!getGame._id">
     <i class="fa-solid fa-arrow-left float-left ml-1 mt-3" @click="back"></i>
   </div>
 
-  <CaptureTeamsView />
+  <CaptureTeamsView v-if="!getGame._id"/>
+  <CaputerLineUpView  v-else/>
 
   <!-- <form @submit="onNextIning">
     <div v-if="isStartedGame" class="flex flex-col mt-2 justify-center content-center">
@@ -23,52 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import type { StartGame } from "../interfaces/start-game";
-import { useStartGame } from "../composable/useStartGame";
 import { useRouter } from "vue-router";
 import CaptureTeamsView from "./CaptureTeamsView.vue";
-
+import CaputerLineUpView from "./CaputerLineUpView.vue";
+import { useCaptureLineUp } from '../composable/useStartGame';
+const { getGame } = useCaptureLineUp();
 const router = useRouter();
-const {
-  game,
-  startGame,
-  // nextIning,
-  // inning,
-  // isAllowedToFinishTheGame,
-  finishGame,
-} = useStartGame();
-
-const vsTeam = ref();
-const gameNumber = ref<number>();
-const runsOut = ref<number>(0);
-const runsIn = ref<number>(0);
-
-const isStartedGame = ref(false);
-
-const onSubmit = async () => {
-  const dataToSave: StartGame = {
-    vsTeam: vsTeam.value,
-    gameNumber: gameNumber?.value ?? 0,
-  };
-  const resp = await startGame(dataToSave);
-
-  if (resp) {
-    isStartedGame.value = true;
-  }
-};
-
-const onNextIning = () => {
-  const dataToSave = {
-    runsOut: +runsOut.value,
-    runsIn: +runsIn.value,
-  };
-  // nextIning(dataToSave);
-};
-const endGame = async () => {
-  await finishGame(game.value?._id ?? "");
-  router.push({ name: "games-list" });
-};
 
 const back = () => {
   const answer = window.confirm('Seguro que deseas abandonar esta página? Se perderán todos los cambios')
@@ -77,7 +38,3 @@ const back = () => {
 }
 
 </script>
-
-<style scoped>
-
-</style>

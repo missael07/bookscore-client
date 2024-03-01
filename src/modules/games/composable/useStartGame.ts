@@ -1,21 +1,24 @@
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useMutation } from '@tanstack/vue-query'
 
-import gamesApi from '../api/gamesApi'
-import { finishGameHelper, startGameHelper } from '../helpers/getGames'
+
+import { startGameHelper } from '../helpers/getGames'
 
 import type { StartGame } from '../interfaces/start-game'
 import type { Games } from '../interfaces/games-list.response';
+import { useStore } from 'vuex'
 
 
-export const useStartGame = () => {
+export const useCaptureLineUp = () => {
+
+    const store = useStore();
 
     // Props
     const errorMessage = ref('');
     const game = ref<Games>();
     const hasGameStarted = ref(false);
-
+    const hasGameStartedComputed = computed(() => hasGameStarted.value)
 
 
     const startGame = async ( dataToSave: StartGame ) => {
@@ -23,10 +26,14 @@ export const useStartGame = () => {
             dataToSave.gameNumber = Number.parseInt(dataToSave.gameNumber.toString())
             const  data  = await startGameHelper(dataToSave);
             game.value = data;
+            hasGameStarted.value = true;
+            store.dispatch('games/setGameData', game.value);
             return data
 
         } catch (error) {
             console.log(error)
+            hasGameStarted.value = false;
+
             errorMessage.value = 'No se pudo empezar el juego!';
             return
         }
@@ -35,33 +42,10 @@ export const useStartGame = () => {
         mutationFn: startGame,
     })
 
-
-
-    const finishGame = async ( id: string ) => {
-        // try {
-        //     const dataToSend = {
-        //         runsOut: +totalRunsOut.value,
-        //         runsIn: +totalRunsIn.value,
-        //         isWon: totalRunsOut.value > totalRunsIn.value
-        //     }
-        //     console.log(dataToSend);
-        //     const  data  = await finishGameHelper(id, dataToSend);
-        //     console.log(data)
-        //     return data
-
-        // } catch (error) {
-        //     console.log(error)
-        //     errorMessage.value = 'No se pudo empezar el juego!';
-        //     return
-        // }
-    }
-
-    const responseMutation = useMutation({
-        mutationFn: startGame,
-    })
     return {
 
         //Props
+        hasGameStartedComputed,
         error,
         errorMessage,
         game,
@@ -73,6 +57,10 @@ export const useStartGame = () => {
         
         //Methods
         startGame,
-        finishGame
+
+        //getters
+        getGame: computed( () => {
+           return  store.getters['games/getGame']
+        })
     }
 }

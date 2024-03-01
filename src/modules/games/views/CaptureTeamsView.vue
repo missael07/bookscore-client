@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit" v-if="!hasGameStarted">
     <div class="flex flex-col mt-2 justify-center content-center">
       <label class="block text-sm font-medium leading-6 text-gray-900"
         >Jornada Número</label
@@ -10,7 +10,8 @@
         v-model="gameNumber"
         :disabled="hasGameStarted"
         class="mt-2 mx-5 px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
+        max="99"
+        />
       <label class="block text-sm font-medium leading-6 text-gray-900"
         >Equipo Encontra</label
       >
@@ -22,11 +23,12 @@
         class="mt-2 mx-5 px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
       <button
+
         type="submit"
         v-if="!hasGameStarted"
         class="start-game mt-1 m-5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       >
-        Empezar Juego
+        Capturar Lineup
       </button>
     </div>
   </form>
@@ -41,13 +43,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useStartGame } from "../composable/useStartGame";
+import { useCaptureLineUp } from "../composable/useStartGame";
 import { StartGame } from "../interfaces/start-game";
-import ModalComponent from "@/components/ModalComponent.vue";
 import { useModal } from "../../../composables/useModal";
 import MessageModal from "@/components/MessageModal.vue";
 
-const { game, hasGameStarted, startGame } = useStartGame();
+const { hasGameStarted, startGame } = useCaptureLineUp();
 
 const { isOpen, openModal, closeModal } = useModal();
 
@@ -59,6 +60,7 @@ const onSubmit = async () => {
     openModal();
     return;
   }
+
   const dataToSave: StartGame = {
     vsTeam: vsTeam.value,
     gameNumber: gameNumber?.value ?? 0,

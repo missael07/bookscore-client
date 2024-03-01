@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from "vue";
 import { Games } from "../interfaces/games-list.response"
 
 
