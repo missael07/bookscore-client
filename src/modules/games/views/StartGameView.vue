@@ -31,7 +31,7 @@ import CaputerLineUpView from "./CaputerLineUpView.vue";
 import { useCaptureLineUp } from '../composable/useStartGame';
 import { usePlayer } from '../composable/usePlayer';
 import CaptureInningsView from "./CaptureInningsView.vue";
-const { getGame } = useCaptureLineUp();
+const { getGame, setGame} = useCaptureLineUp();
 const { getPlayers, getIsGameStarted} = usePlayer();
 const router = useRouter();
 
@@ -40,5 +40,11 @@ const back = () => {
         if( !answer ) return false
   router.push({ name: "games-list" });
 }
+
+const getGameFromLocalStorage = () => {
+  setGame()
+}
+
+getGameFromLocalStorage();
 
 </script>
