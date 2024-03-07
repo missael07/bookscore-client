@@ -6,7 +6,7 @@
       <div class="flex flex-col sm:flex-row mt-2 justify-center content-center">
         <div>
           <label class="block text-sm font-medium leading-6 text-gray-900"
-            >Jornada Número</label
+            >Jugador</label
           >
           <input
             type="text"
@@ -19,23 +19,23 @@
           <label
             id="listbox-label"
             class="block text-sm font-medium leading-6 text-gray-900"
-            >Posicion</label
+            >Posición</label
           >
           <select
             v-model="playerPosition"
             class="cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
           >
             <option value="">Selecciona Posición...</option>
-            <option value="1">P</option>
-            <option value="2">C</option>
-            <option value="3">1B</option>
-            <option value="4">2B</option>
-            <option value="5">3B</option>
-            <option value="6">SS</option>
-            <option value="7">LF</option>
-            <option value="8">CF</option>
-            <option value="9">RF</option>
-            <option value="10">JD</option>
+            <option value="P">P</option>
+            <option value="C">C</option>
+            <option value="1B">1B</option>
+            <option value="2B">2B</option>
+            <option value="3B">3B</option>
+            <option value="SS">SS</option>
+            <option value="LF">LF</option>
+            <option value="CF">CF</option>
+            <option value="RF">RF</option>
+            <option value="JD">JD</option>
           </select>
         </div>
 

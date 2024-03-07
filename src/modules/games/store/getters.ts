@@ -5,3 +5,7 @@ export const getGame = (state: any) => {
 export const getPlayers = ( state: any ) => {
     return state.players;
 }
+
+export const isGameStart = ( state: any ) => {
+    return state.gameStarted;
+}

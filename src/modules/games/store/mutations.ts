@@ -6,4 +6,5 @@ export const setGameData = (state: any, game: Games) => {
 
 export const setPlayers = (state: any, players: PlayerResponse[]) => {
     state.players = players;
+    state.gameStarted = true;
 }

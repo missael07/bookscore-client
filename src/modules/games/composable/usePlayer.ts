@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { Player } from "../interfaces/players"
 import { startedGame } from "../helpers/startGame"
 import { useMutation } from "@tanstack/vue-query"
@@ -36,6 +36,13 @@ export const usePlayer = () => {
 
     return {
         lineUp,
-        startGame
+        startGame,
+
+        getPlayers: computed( () => {
+            return store.getters['games/getPlayers']
+        }),
+        getIsGameStarted: computed( () => {
+            return store.getters['games/isGameStart']
+        })
     }
 }

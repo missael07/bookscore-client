@@ -1,5 +1,6 @@
 
 export default () => ({
     game: {},
-    players: []
+    players: [],
+    gameStarted: false
 })

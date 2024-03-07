@@ -4,7 +4,8 @@
   </div>
 
   <CaptureTeamsView v-if="!getGame._id"/>
-  <CaputerLineUpView  v-else/>
+  <CaputerLineUpView  v-else-if="!getIsGameStarted"/>
+  <CaptureInningsView v-else :players="getPlayers"/>
 
   <!-- <form @submit="onNextIning">
     <div v-if="isStartedGame" class="flex flex-col mt-2 justify-center content-center">
@@ -28,7 +29,10 @@ import { useRouter } from "vue-router";
 import CaptureTeamsView from "./CaptureTeamsView.vue";
 import CaputerLineUpView from "./CaputerLineUpView.vue";
 import { useCaptureLineUp } from '../composable/useStartGame';
+import { usePlayer } from '../composable/usePlayer';
+import CaptureInningsView from "./CaptureInningsView.vue";
 const { getGame } = useCaptureLineUp();
+const { getPlayers, getIsGameStarted} = usePlayer();
 const router = useRouter();
 
 const back = () => {
